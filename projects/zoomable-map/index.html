@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Leaflet Functions</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+        #map{ 
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: -1;
+        }
+        .sidebar{
+            max-width: 30vw;
+        }
+        .sidebar li{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- map holder -->
+    <div id="map"></div>
+
+
+    <!-- list group -->
+    <div class="container-fluid">
+        <div class="d-flex justify-content-end mt-5">
+            <ul class="list-group sidebar">
+                <li id="btn-1" class="list-group-item" data-title="Harvard University" data-descr="testtest" data-lat="42.37537206022109" data-lng="-71.11790547724573" data-zoom="10">Case 1</li> </li>
+                <li id="btn-2" class="list-group-item" data-title="Jacksonville University" data-descr="jacksontest" data-lat="30.352012" data-lng="-81.603335" data-zoom="10">Case 2</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- jquery and leaflet libraries -->
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+
+    <!-- your custom code below-->
+    <script>
+
+const map = L.map('map', {scrollWheelZoom: false, dragging: false}).setView([38.416, -97.81], 4);
+//const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+
+const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	subdomains: 'abcd',
+	maxZoom: 20
+});
+
+
+tiles.addTo(map);  
+const data = [
+        {title: "Jacksonville University", lat: 30.3519749622075, lon: -81.60354996223697},
+        {title: "Arkansas Tech University", lat: 35.29399018067186, lon: -93.13611501783316},
+        {title: "Colgate University", lat: 42.81580186305185, lon: -75.54070331743152},
+        {title: "Florida State University", lat: 30.442341287430576, lon: -84.29782917972686},
+        {title: "Assumption University", lat: 42.29447355684924, lon: -71.82919139047807},
+        {title: "Cal Poly San Luis Obispo", lat: 35.305206592458326, lon: -120.66249422442468},
+        {title: "University of Tennessee Knoxville", lat: 35.95460970807102, lon:  -83.92945640430897},
+        {title: "Xavier University", lat: 39.14994791475577, lon:  -84.47403651763618},
+        {title: "University of Alabama at Birmingham", lat: 33.50228279414017, lon:  -86.80513734675405},
+        {title: "East Tennessee State University", lat: 36.302568300342536, lon:  -82.36989591963598},
+        {title: "Boise State University", lat: 43.60253060127975, lon:  -116.20100869040188},
+        {title: "Ohio State University", lat: 40.00626144997213, lon:  -83.0282302175899},
+        {title: "Washington and Lee University", lat: 37.79002170813347, lon:  -79.44588277537997},
+        {title: "Vassar College", lat: 41.68702457594631, lon:  -73.89570827516843},
+        {title: "Swarthmore College", lat: 39.9040058082153, lon: -75.3525708734151},
+        {title: "Lafayette College", lat: 40.69869902540702, lon:  -75.21014009056815},
+        {title: "Louisiana Tech", lat: 32.53020240445513, lon:  -92.65217448912615},
+        {title: "University of Wisconsin-Madison", lat: 43.07554140529029, lon:  -89.40811834625248},
+        {title: "University of Colorado Boulder", lat: 40.00753888250135, lon:  -105.26598710409802},
+        {title: "Quinnipiac University", lat: 41.41909512604511, lon:  -72.89362784634754},
+        {title: "University of Oregon", lat: 44.045038390538046, lon:  -123.07257331735913},
+        {title: "Duke University", lat: 36.00159936537384, lon:  -78.93825006197879},
+        {title: "Washington State University", lat: 46.730217772298, lon:  -117.18022006929404},
+        {title: "University of California, Berkeley", lat: 37.87036270631211, lon:  -122.25944987537582},
+        {title: "Northeastern University", lat: 42.34010222963403, lon: -71.08989993280336},
+        {title: "University of Saint Joseph", lat: 41.7821207782147, lon:  -72.73051093283519},
+        {title: "Brown University", lat: 41.827039531197485, lon:   -71.40261259537652},
+        {title: "Dartmouth College", lat: 45.002125784699764, lon:  -72.29531554363031},
+        {title: "College of Holy Cross", lat: 44.0497065329734, lon:   -71.57753250326645},
+        {title: "University of New Hampshire", lat: 43.139057574325484, lon:  -70.93701447508481},
+        {title: "Miami University", lat: 39.51196900098211, lon:   -84.73152654939626},
+        {title: "Amherst College", lat: 42.37122340106834, lon:  -72.51698136450216},
+        {title: "Northern Arizona University", lat: 35.180522677503085, lon:  -111.65400141783861},
+        {title: "University of Utah", lat: 40.855059112388595, lon: -111.78208588492959},
+        {title: "University of Pittsburgh", lat: 40.4491074112313, lon:  -79.96059194868018},
+        {title: "University of Washington", lat: 48.617584656511994, lon:  -122.35007628876184},
+        {title: "Loyola Marymount University", lat: 33.969426616521865, lon:  -118.41889840440437},
+        {title: "Purdue University at Fort Wayne", lat: 41.118598657728576, lon:  -85.10594100403655},
+        {title: "Harvard University", lat: 42.374797339192256, lon:  -71.1180986184681}
+    ]  
+
+
+data.forEach(function(d){
+    L.marker([d.lat,d.lon]).bindPopup(`<h3>${d.title}</h3>`).addTo(map)
+})
+
+
+
+
+
+const popup = L.popup();
+
+$(".list-group-item").on("click", function(){
+
+    const title = $(this).attr("data-title");
+    const lat   = $(this).attr("data-lat");
+    const lng   = $(this).attr("data-lng");
+    const zoom  = $(this).attr("data-zoom");
+    const descr = $(this).attr("data-descr")
+    map.flyTo([lat, lng], zoom);
+    popup.setLatLng([lat, lng]);
+    popup.setContent(`<h2>${title}</h2><p>${descr}</p>`);
+    popup.openOn(map);
+
+});  
+
+  
+  
+  </script>
+  </body>
+</html>
