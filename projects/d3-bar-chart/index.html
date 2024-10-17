@@ -13,7 +13,7 @@
 
         const width = 800;
         const height = 800;
-        const margin = {top: 10, right: 10, bottom:20, left:200};
+        const margin = {top: 10, right: 10, bottom:120, left:200};
 
         const svg = d3.select("body")
             .append("svg")
@@ -59,6 +59,9 @@
             svg.append("g")
                 .attr("transform", `translate(${margin.left},${height - margin.bottom})`)
                 .call(d3.axisBottom(scaleX))
+                .selectAll("text")
+                .attr("transform", "rotate(-120)")
+                .attr("text-anchor", "end")
 
             svg.append("g")
                 .attr("transform", `translate(${margin.left}, ${margin.top})`)
